@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="CERDAS – Edukasi Sehat Interaktif" />
+    <title>CERDAS – Edukasi Sehat Interaktif</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #93c5fd, #c4b5fd);
+            color: #1e293b;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav.navbar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem 0.5rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        nav.navbar a {
+            color: #1e293b;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            border-radius: 999px;
+            transition: background 0.2s;
+        }
+
+        nav.navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        nav.navbar a.active {
+            background-color: #2563eb;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main.container {
+            padding: 1.5rem 1rem 1rem;
+            max-width: 480px;
+            margin: auto;
+            flex-grow: 1;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            text-align: center;
+            color: #0f172a;
+            line-height: 1.4;
+        }
+
+        h2 {
+            font-size: 1rem;
+            font-weight: 400;
+            text-align: center;
+            color: #334155;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .button-group a.button,
+        .button-group button {
+            width: 100%;
+            max-width: 320px;
+            background-color: #2563eb;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.5;
+            margin: 0;
+            text-decoration: none;
+            /* Fix underline issue */
+        }
+
+        .button-group a.button:hover,
+        .button-group button:hover {
+            transform: scale(1.03);
+            background-color: #1e40af;
+        }
+
+        .video-section {
+            margin-top: 2.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 14px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-section p {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        iframe {
+            border-radius: 12px;
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #334155;
+            padding: 1.25rem 0;
+            margin-top: 1.5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 99;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(6px);
+            background-color: rgba(0, 0, 0, 0.3);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 320px;
+            width: 80%;
+            animation: popUp 0.3s ease-in-out;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content button {
+            background-color: #2563eb;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: #1e40af;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes popUp {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-height: 720px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            iframe {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#" class="active">Beranda</a>
+        <a href="#" onclick="showComingSoon()">Foto</a>
+        <a href="#" onclick="showComingSoon()">Tentang Kami</a>
+        <a href="#" onclick="showComingSoon()">Kontak</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h1>Selamat Datang di</h1>
+        <h2>“CERDAS – Edukasi Sehat Interaktif”</h2>
+
+        <div class="button-group">
+            <a href="https://drive.google.com/file/d/1K13CwP3L4lL0gEsCZn5TgmUoTuYyzSfx/view?usp=sharing" class="button"
+                target="_blank" rel="noopener noreferrer">
+                📘 Lihat Booklet CERDAS
+            </a>
+            <button onclick="showComingSoon()">🎮 Games Interaktif</button>
+            <button onclick="showComingSoon()">📚 Info Tambahan</button>
+            <button
+                onclick="window.open('https://www.instagram.com/relawangesitmakassar.official?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==', '_blank')">👥
+                Komunitas CERDAS</button>
+        </div>
+    </main>
+
+    <!-- Video Section -->
+    <div class="video-section">
+        <p>Tonton video kisah CERDAS:</p>
+        <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Video CERDAS" allowfullscreen></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <small>&copy; 2025 CERDAS. Semua Hak Dilindungi.</small>
+        <br>
+        <small>Dibuat oleh Ikhwandi untuk Indonesia</small>
+    </footer>
+
+    <!-- Custom Modal -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p>🎉 Fitur ini sedang dikembangkan. Nantikan update terbaru dari kami!</p>
+            <button onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+        function showComingSoon() {
+            document.getElementById("customModal").classList.add("show");
+        }
+
+        function closeModal() {
+            document.getElementById("customModal").classList.remove("show");
+        }
+    </script>
+</body>
+
+</html>
