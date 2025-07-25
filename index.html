@@ -27,20 +27,27 @@
         nav.navbar {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            padding: 1rem 0.5rem;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
             background-color: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         nav.navbar a {
+            flex: 1;
+            min-width: 0;
+            text-align: center;
             color: #1e293b;
             text-decoration: none;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.3rem;
             font-weight: 600;
             border-radius: 999px;
             transition: background 0.2s;
+            font-size: 1rem;
+            white-space: nowrap;
         }
 
         nav.navbar a:hover {
@@ -65,7 +72,6 @@
             margin-bottom: 0.3rem;
             text-align: center;
             color: #0f172a;
-            line-height: 1.4;
         }
 
         h2 {
@@ -74,7 +80,6 @@
             text-align: center;
             color: #334155;
             margin-bottom: 2rem;
-            line-height: 1.5;
         }
 
         .button-group {
@@ -99,10 +104,8 @@
             transition: transform 0.2s ease;
             cursor: pointer;
             text-align: center;
-            line-height: 1.5;
             margin: 0;
             text-decoration: none;
-            /* Fix underline issue */
         }
 
         .button-group a.button:hover,
@@ -120,21 +123,43 @@
             max-width: 480px;
             margin-left: auto;
             margin-right: auto;
+            cursor: pointer;
         }
 
         .video-section p {
             font-weight: 600;
             color: #1e293b;
             margin-bottom: 1rem;
-            font-size: 1rem;
             text-align: center;
         }
 
-        iframe {
-            border-radius: 12px;
+        .fake-video {
+            position: relative;
             width: 100%;
             height: 200px;
-            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .fake-video img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.85);
+        }
+
+        .overlay-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            pointer-events: none;
         }
 
         footer {
@@ -145,7 +170,6 @@
             margin-top: 1.5rem;
         }
 
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -158,7 +182,6 @@
             background-color: rgba(0, 0, 0, 0.3);
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.3s ease-in-out;
         }
 
         .modal.show {
@@ -173,7 +196,19 @@
             text-align: center;
             max-width: 320px;
             width: 80%;
-            animation: popUp 0.3s ease-in-out;
+            animation: popIn 0.25s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .modal-content p {
@@ -197,34 +232,17 @@
             background-color: #1e40af;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
+        @media (max-width: 400px) {
+            nav.navbar a {
+                font-size: 0.82rem;
+                padding: 0.4rem 0.2rem;
             }
 
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes popUp {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @media (max-height: 720px) {
             h1 {
                 font-size: 1.6rem;
             }
 
-            iframe {
+            .fake-video {
                 height: 180px;
             }
         }
@@ -244,12 +262,9 @@
     <main class="container">
         <h1>Selamat Datang di</h1>
         <h2>“CERDAS – Edukasi Sehat Interaktif”</h2>
-
         <div class="button-group">
             <a href="https://drive.google.com/file/d/1K13CwP3L4lL0gEsCZn5TgmUoTuYyzSfx/view?usp=sharing" class="button"
-                target="_blank" rel="noopener noreferrer">
-                📘 Lihat Booklet CERDAS
-            </a>
+                target="_blank" rel="noopener noreferrer">📘 Lihat Booklet CERDAS</a>
             <button onclick="showComingSoon()">🎮 Games Interaktif</button>
             <button onclick="showComingSoon()">📚 Info Tambahan</button>
             <button
@@ -259,19 +274,18 @@
     </main>
 
     <!-- Video Section -->
-    <div class="video-section">
+    <div class="video-section" onclick="showComingSoon('video')">
         <p>Tonton video kisah CERDAS:</p>
-        <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Video CERDAS" allowfullscreen></iframe>
+        <div class="fake-video">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Solid_black.png" alt="Preview Video CERDAS" />
+            <div class="overlay-play">▶</div>
+        </div>
     </div>
 
     <!-- Footer -->
-    <footer>
-        <small>&copy; 2025 CERDAS. Semua Hak Dilindungi.</small>
-        <br>
-        <small>Dibuat oleh Ikhwandi untuk Indonesia</small>
-    </footer>
+    <footer><small>&copy; 2025 CERDAS. Semua Hak Dilindungi.</small></footer>
 
-    <!-- Custom Modal -->
+    <!-- Modal -->
     <div id="customModal" class="modal">
         <div class="modal-content">
             <p>🎉 Fitur ini sedang dikembangkan. Nantikan update terbaru dari kami!</p>
@@ -279,9 +293,12 @@
         </div>
     </div>
 
-    <!-- JS -->
     <script>
-        function showComingSoon() {
+        function showComingSoon(context) {
+            const modalText = context === 'video' ?
+                '🎬 Video ini sedang diproduksi. Nantikan update terbaru dari kami!' :
+                '🎉 Fitur ini sedang dikembangkan. Nantikan update terbaru dari kami!';
+            document.querySelector("#customModal p").textContent = modalText;
             document.getElementById("customModal").classList.add("show");
         }
 
